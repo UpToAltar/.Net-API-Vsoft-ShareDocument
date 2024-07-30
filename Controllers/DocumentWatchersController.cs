@@ -43,7 +43,7 @@ namespace Vsoft_share_document.Controllers
                 }
                 else
                 {
-                    return Ok($"Không tồn tại chia sẻ tài liệu có Id = {id}");
+                    return BadRequest($"Không tồn tại chia sẻ tài liệu có Id = {id}");
                 }
             }
             catch (Exception ex)

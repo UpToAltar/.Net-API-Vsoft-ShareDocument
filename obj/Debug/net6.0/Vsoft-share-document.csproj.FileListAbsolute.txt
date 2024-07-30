@@ -78,3 +78,5 @@ D:\vsoft\Vsoft-share-document\obj\Debug\net6.0\refint\Vsoft-share-document.dll
 D:\vsoft\Vsoft-share-document\obj\Debug\net6.0\Vsoft-share-document.pdb
 D:\vsoft\Vsoft-share-document\obj\Debug\net6.0\Vsoft-share-document.genruntimeconfig.cache
 D:\vsoft\Vsoft-share-document\obj\Debug\net6.0\ref\Vsoft-share-document.dll
+D:\vsoft\Vsoft-share-document\obj\Debug\net6.0\Vsoft-share-document.sourcelink.json
+D:\vsoft\Vsoft-share-document\bin\Debug\net6.0\Swashbuckle.AspNetCore.Annotations.dll

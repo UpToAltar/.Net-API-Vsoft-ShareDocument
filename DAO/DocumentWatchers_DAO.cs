@@ -29,6 +29,7 @@ namespace Vsoft_share_document.DAO
                 parameters.Add("ExpiredIn", DateTime.ParseExact(body.ExpiredIn, "dd-MM-yyyy", CultureInfo.InvariantCulture), DbType.DateTime);
                 parameters.Add("CreatedBy", Guid.Empty, DbType.Guid);
                 parameters.Add("CheckSum", "", DbType.String);
+                parameters.Add("IsActive", body.IsActive, DbType.Boolean);
 
                 int dt = await _db.ExcuteNonQueryAsync("Proc_DocumentWatchers_Insert", parameters);
                 return dt;
