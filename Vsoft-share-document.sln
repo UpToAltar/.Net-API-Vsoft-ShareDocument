@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vsoft-share-document", "Vsoft-share-document.csproj", "{934F2CDC-65A3-4A71-880A-8726ACC29927}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinForms-Vsoft", "C:\Users\VSOFT\source\repos\WinForms-Vsoft\WinForms-Vsoft.csproj", "{8CF8AC00-AE55-4823-95B3-D9729236D40F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{934F2CDC-65A3-4A71-880A-8726ACC29927}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{934F2CDC-65A3-4A71-880A-8726ACC29927}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{934F2CDC-65A3-4A71-880A-8726ACC29927}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CF8AC00-AE55-4823-95B3-D9729236D40F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CF8AC00-AE55-4823-95B3-D9729236D40F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CF8AC00-AE55-4823-95B3-D9729236D40F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CF8AC00-AE55-4823-95B3-D9729236D40F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
