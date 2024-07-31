@@ -19,26 +19,32 @@ namespace Vsoft_share_document.BUS
             // Kiểm tra các giá trị
             if (body == null)
             {
-                return "Vui lòng nhập thông tin";
+                throw new ArgumentException("Vui lòng nhập thông tin");
             }
             else if ((body.UserId == null || body.UserId.ToString() == "") && body.Email == "") {
-                return "Vui lòng nhập UserId hoặc Email";
+                throw new ArgumentException("Vui lòng nhập UserId hoặc Email");
             } else if (body.DocumentId.ToString() == "")
             {
                 return "Vui lòng nhập DocumentId";
             } else if(body.ExpiredIn == "" || !DateTimeValidator.IsValidDateFormat(body.ExpiredIn))
             {
-                return "Vui lòng nhập ExpiredIn đúng định dạng dd-MM-yyyy";
+                throw new ArgumentException("Vui lòng nhập ExpiredIn đúng định dạng dd-MM-yyyy");
             }
+            //Check email hợp lệ
+            if ( body.Email != "" && !EmailValidator.IsValidEmail(body.Email))
+            {
+                throw new ArgumentException("Email không hợp lệ");
+            }
+
             // Tìm tài liệu
             var document = await _documentWatchersDAO.GetDocumentById(body.DocumentId);
             if (document == null) {
-                return $"Không tồn tại tài liệu có Id = {body.DocumentId}";
+                throw new ArgumentException($"Không tồn tại tài liệu có Id = {body.DocumentId}");
             }
             //Kiểm tra tài liệu có được chia sẻ không
             if (document.Status != 1 && document.Status != 3 || document.SecurityLevel == 3)
             {
-                return "Tài liệu không được phép chia sẻ";
+                throw new ArgumentException("Tài liệu không được phép chia sẻ");
             }
 
 
@@ -48,13 +54,13 @@ namespace Vsoft_share_document.BUS
                 var user = await _documentWatchersDAO.GetUserById(body.UserId);
                 
                 if (user == null) {
-                    return $"Không tồn tại người dùng có Id = {body.UserId}";
+                    throw new ArgumentException($"Không tồn tại người dùng có Id = {body.UserId}");
                 }
 
                 //Kiểm tra tài liệu đã chia sẻ cho người dùng này chưa
                 var docWatcher = await _documentWatchersDAO.GetDocumentWatchersByDocumentIdAndUserId(body.DocumentId, user.Id);
                 if (docWatcher != null) {
-                    return "Tài liệu đã được chia sẻ cho người dùng trước đó";
+                    throw new ArgumentException("Tài liệu đã được chia sẻ cho người dùng trước đó");
                 }
 
                 // Người dùng hệ thống được chia sẻ tài liệu sercurity 0-1-2
@@ -64,18 +70,14 @@ namespace Vsoft_share_document.BUS
                     int createSucess = await _documentWatchersDAO.CreateDocumentWatchers(body);
                     if (createSucess == 0)
                     {
-                        return "Lỗi tạo mới chia sẻ tài liệu";
+                        throw new ArgumentException("Lỗi tạo mới chia sẻ tài liệu");
                     }
 
                 }
             }
             else
             {
-                //Check email hợp lệ
-                if(!EmailValidator.IsValidEmail(body.Email))
-                {
-                    return "Email không hợp lệ";
-                }
+                
                 // Người dùng ngoài hệ thống được chia sẻ tài liệu sercurity 0-1-2
                 if (document.SecurityLevel == 0 || document.SecurityLevel == 1)
                 {
@@ -84,19 +86,19 @@ namespace Vsoft_share_document.BUS
                     var docWatcher = await _documentWatchersDAO.GetDocumentWatchersByDocumentIdAndEmail(body.DocumentId, body.Email);
                     if (docWatcher != null)
                     {
-                        return "Tài liệu đã được chia sẻ cho người dùng trước đó";
+                        throw new ArgumentException("Tài liệu đã được chia sẻ cho người dùng trước đó");
                     }
 
                     int createSucess = await _documentWatchersDAO.CreateDocumentWatchers(body);
                     if (createSucess == 0)
                     {
-                        return "Lỗi tạo mới chia sẻ tài liệu";
+                        throw new ArgumentException("Lỗi tạo mới chia sẻ tài liệu");
                     }
 
                 }
             }
 
-            return ""; 
+            return "Chia sẻ tài liệu cho người dùng thành công"; 
 
 
         }
@@ -110,24 +112,36 @@ namespace Vsoft_share_document.BUS
 
                 if (docWatcher == null)
                 {
-                    return $"Không tồn tại chia sẻ tài liệu có Id = {guid}";
+                    throw new ArgumentException($"Không tồn tại chia sẻ tài liệu có Id = {guid}");
                 }
                 int deleteSucess = await _documentWatchersDAO.DeleteDocumentById(guid);
                 if (deleteSucess == 0)
                 {
-                    return "Lỗi xóa chia sẻ tài liệu";
+                    throw new ArgumentException("Lỗi xóa chia sẻ tài liệu");
                 }
             }
             else
             {
-                return "Chuỗi không phải là một Guid hợp lệ.";
+                throw new ArgumentException("Chuỗi không phải là một Guid hợp lệ.");
             }
-            return "";
+            return "Xóa chia sẻ tài liệu thành công";
         }
 
         public async Task<List<ENT_DocumentWatchers>> GetAll()
         {
             var data = await _documentWatchersDAO.GetAllDocumentWatchers();
+            return data;
+        }
+
+        public async Task<List<ENT_Document>> GetAllDocument()
+        {
+            var data = await _documentWatchersDAO.GetAllUDocuments();
+            return data;
+        }
+
+        public async Task<List<ENT_User>> GetAllUser()
+        {
+            var data = await _documentWatchersDAO.GetAllUser();
             return data;
         }
 

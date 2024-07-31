@@ -30,6 +30,37 @@ namespace Vsoft_share_document.Controllers
             }
         }
 
+        // GET: api/<DocumentWatchersController>
+        [HttpGet("GetUserToAdd")]
+        public async Task<IActionResult> GetUser()
+        {
+            try
+            {
+                var data = await _documentWatchers_BUS.GetAllUser();
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                //log error
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("GetDocumentToAdd")]
+        public async Task<IActionResult> GetDocument()
+        {
+            try
+            {
+                var data = await _documentWatchers_BUS.GetAllDocument();
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                //log error
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         // GET api/<DocumentWatchersController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
@@ -59,16 +90,13 @@ namespace Vsoft_share_document.Controllers
         {
             try
             {
-                string msgErr = await _documentWatchers_BUS.Create(body);
-                if (msgErr == null || msgErr == "") {
-                    return Ok("Chia sẻ tài liệu cho người dùng thành công");
-                }
-                return BadRequest(msgErr);
+                string msg = await _documentWatchers_BUS.Create(body);
+                return Ok(msg);
             }
             catch (Exception ex)
             {
                 //log error
-                return StatusCode(500, ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -84,17 +112,13 @@ namespace Vsoft_share_document.Controllers
         {
             try
             {
-                string msgErr = await _documentWatchers_BUS.DeleteById(id);
-                if (msgErr == null || msgErr == "")
-                {
-                    return Ok("Xóa chia sẻ tài liệu thành công");
-                }
-                return BadRequest(msgErr);
+                string msg = await _documentWatchers_BUS.DeleteById(id);
+                return Ok(msg);
             }
             catch (Exception ex)
             {
                 //log error
-                return StatusCode(500, ex.Message);
+                return BadRequest(ex.Message);
             }
         }
     }

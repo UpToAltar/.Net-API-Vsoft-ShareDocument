@@ -9,5 +9,8 @@ namespace Vsoft_share_document.InterfaceBUS
 
         public Task<List<ENT_DocumentWatchers>> GetAll();
         public Task<ENT_DocumentWatchers> GetById(string id);
+
+        public Task<List<ENT_User>> GetAllUser();
+        public Task<List<ENT_Document>> GetAllDocument();
     }
 }

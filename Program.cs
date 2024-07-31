@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen(
 
 
 //Add DI
-builder.Services.AddSingleton<DatabaseHelperNew>();
+builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<IDocumentWatchers_BUS, DocumentWatchers_BUS>();
 builder.Services.AddScoped<IDocumentWatchers_DAO, DocumentWatchers_DAO>();
 builder.Services.AddControllers();
